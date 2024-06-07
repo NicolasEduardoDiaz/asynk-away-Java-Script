@@ -37,6 +37,8 @@ const validateDeleteAlbum = async({id}) => {
 }
 
 export const deleteAlbum = async(arg) => {
+    let val = await validateDeleteAlbum(arg);
+    if(val) return val;
     let config ={
         method: "DELETE",
         headers: {"Content-Type": "application/json"}
