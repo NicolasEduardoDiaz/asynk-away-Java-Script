@@ -16,7 +16,7 @@ const validateAddAlbum = async({userId, title}) => {
     if( typeof userId !== "number" || userId === undefined) return {status: 406, message: `The user id not arriving or does not comply with the required format `};
     if( typeof title !== "string" || title === undefined) return {status: 406, message: `The title id not arriving or does not comply with the required format `};
     let user = await getUser ({userId});
-    if(user.status == 204) return {status: 200, message: `The user to search dos not exist`};
+    if(user.status == 204) return {status: 200, message: `The user to search does not exist`};
 }
 
 export const addAlbum = async(arg) => {
