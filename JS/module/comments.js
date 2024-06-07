@@ -1,3 +1,5 @@
+import { getPost } from "./posts"
+
 const validateGetComments = async ({ commentId}) => {
     if(typeof commentId !== "number" || commentId === undefined) return { status: 406, message: `The comment id is missing or does not comply with the required format` };
 };
@@ -16,6 +18,8 @@ const validateAddComment = async({ postId, name, email, body }) => {
     if(typeof name !== "string" || name === undefined) return { status: 406, message: `The name is missing or does comply with the required format` };
     if(typeof email !== "string" || email === undefined) return { status: 406, message: `The email is missing or does not comply with the required format` };
     if(typeof body !== "string" || body === undefined) return { status: 406, message: `The body is missing or does comply with the required format` };
+    let post = await getPost ({postId});
+    if(post.status ==204) return {status: 200, message: `The post to search does not exist`}
 };
 
 export const addComment = async(arg) => {
