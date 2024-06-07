@@ -47,4 +47,26 @@ export const deleteAlbum = async(arg) => {
     data.status = 202
     data.message = `The album ${arg.id} was deleted from the database`
     return data;
+};
+
+const validateUpdateAlbum = async ({albumId, userId, title}) => {
+    if(typeof albumId !== "number" || albumId === undefined) return {status: 406, message: `The album id not arriving or does not comply with the required format`};
+    if(typeof userId !== "number" || userId === undefined) return {status: 406, message: `The user id not arriving or does not comply with the required format`};
+    if(typeof title !== "string" || title === undefined) return {status: 406, message: `The title does not comply with the required format`};
+};
+
+export const updateAlbum = async (arg) => {
+    let val = await validateUpdateAlbum(arg);
+    if (val) return val;
+    let config = {
+        method: "PUT",
+        headers:{"Content-Type": "application/json"},
+        body: JSON.stringify(arg)
+    };
+    let res = await fetch(`http://172.16.101.146:5802/albums/${arg.albumId}`, config);
+    if (res.status === 404)
+        return {status: 204, message: `Album does not exist` };
+
+    let data = await res.json();
+    return data;
 }
